@@ -1,0 +1,8 @@
+DataLoader: total number of tokens: 925,653,391 across 1 files.
+DataLoader: total number of tokens: 19,043,638 across 1 files.
+
+100 bilhoes tokens
+
+100 milhoes segundos
+
+

@@ -31,7 +31,7 @@ class NewGELU(nn.Module):
     def forward(self, input):
         return 0.5 * input * (1.0 + torch.tanh(math.sqrt(2.0 / math.pi) * (input + 0.044715 * torch.pow(input, 3.0))))
 
-FLASH = 0
+FLASH = True
 
 class CasualSelfAttention(nn.Module):
 
@@ -244,7 +244,7 @@ def _load_data_shard(filename):
     with open(filename, 'rb') as f:
         header = np.frombuffer(f.read(256 * 4), dtype = np.int32)
         ntok = header[2]
-        tokens = np.frombuffer(f.read(), dtype = np.uint16)
+        tokens = np.frombuffer(f.read(), dtype = np.uint32)
     return tokens
 
 class DistributedDataLoader:
@@ -415,11 +415,11 @@ if __name__ == "__main__":
     parser.add_argument("--output_dir", type=str, default="", help="output directory to which to write logs and checkpoints")
     parser.add_argument("--model", type=str, default="gpt2", help="gpt2|gpt2-medium|gpt2-large|gpt2-xl|d12|d24|d36|d48")
     # token layout for each step of the optimization
-    parser.add_argument("--batch_size", type=int, default=4, help="batch size, in units of #batch dimensions")
-    parser.add_argument("--sequence_length", type=int, default=1024, help="sequence length")
-    parser.add_argument("--total_batch_size", type=int, default=(32 * 32768), help="total desired batch size, in units of #tokens")
+    parser.add_argument("--batch_size", type=int, default=12, help="batch size, in units of #batch dimensions")
+    parser.add_argument("--sequence_length", type=int, default=128, help="sequence length")
+    parser.add_argument("--total_batch_size", type=int, default=8*1024, help="total desired batch size, in units of #tokens")
     # workload (number of steps)
-    parser.add_argument("--num_iterations", type=int, default=3000, help="number of iterations to run")
+    parser.add_argument("--num_iterations", type=int, default=10000, help="number of iterations to run")
     parser.add_argument("--inference_only", type=int, default=0, help="only run inference")
     # optimization
     parser.add_argument("--learning_rate", type=float, default=1e-4, help="learning rate warmup iterations")
@@ -428,11 +428,11 @@ if __name__ == "__main__":
     parser.add_argument("--weight_decay", type=float, default=0.0, help="weight decay")
     parser.add_argument("--grad_clip", type=float, default=1.0, help="maximum gradient magnitude")
     # evaluation
-    parser.add_argument("--val_loss_every", type=int, default=5, help="every how mant steps to evaluate val loss?")
+    parser.add_argument("--val_loss_every", type=int, default=100, help="every how mant steps to evaluate val loss?")
     parser.add_argument("--val_max_steps", type=int, default=20, help="how many batches of val to average?")
-    parser.add_argument("--sample_every", type=int, default=10, help="how often to sample from the model?")
+    parser.add_argument("--sample_every", type=int, default=100, help="how often to sample from the model?")
     # debugging
-    parser.add_argument("--overfit_single_batch", type=int, default=1, help="overfit just one batch of data")
+    parser.add_argument("--overfit_single_batch", type=int, default=0, help="overfit just one batch of data")
     # numerics
     parser.add_argument("--tensorcores", type=int, default=0, help="use tensorcores")
     # memory management
@@ -550,7 +550,7 @@ if __name__ == "__main__":
             return min_lr
         decay_ratio = (it - args.warmup_iters) / (args.num_iterations - args.warmup_iters)
         coeff = 0.5 * (1.0 + math.cos(math.pi * decay_ratio))
-        return min_lr + coeff * (args.learning_rate + min_lr)
+        return min_lr + coeff * (args.learning_rate - min_lr)
 
     logfile = None
 
@@ -587,7 +587,7 @@ if __name__ == "__main__":
             start_ids = [enc.eot_token]
             xg = (torch.tensor(start_ids, dtype = torch.long, device = device)[None, ...])
             max_new_tokens = 32
-            temperature = 1.0
+            temperature = 3.0
             top_k = 40
             yg = raw_model.generate(xg, max_new_tokens, temperature = temperature, top_k = top_k)
             print0("----------------")
