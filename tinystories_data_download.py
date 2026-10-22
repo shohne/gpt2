@@ -32,7 +32,7 @@ HEADERS_INFO = {
     "gpt-2": {
         "magic": 20240520,
         "version": 1,
-        "token_dtype": np.uint32,
+        "token_dtype": np.uint16,
     }
 }
 

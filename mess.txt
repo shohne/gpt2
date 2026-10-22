@@ -6,3 +6,44 @@ DataLoader: total number of tokens: 19,043,638 across 1 files.
 100 milhoes segundos
 
 
+
+    parser.add_argument("--input_bin", type=str, default="dev/data/tinystories/tinystories_train.bin", help="input .bin to train on")
+
+
+tep 9994 / 10000 | train loss 1.631793 | norm 1.0011 | lr 1.00e-04 | (1458.57 ms | 5265 tok/s)
+Step 9995 / 10000 | train loss 1.401142 | norm 0.9304 | lr 1.00e-04 | (1459.22 ms | 5263 tok/s)
+Step 9996 / 10000 | train loss 1.648114 | norm 1.0260 | lr 1.00e-04 | (1459.57 ms | 5262 tok/s)
+Step 9997 / 10000 | train loss 1.532794 | norm 0.9916 | lr 1.00e-04 | (1458.95 ms | 5264 tok/s)
+Step 9998 / 10000 | train loss 1.687693 | norm 1.0372 | lr 1.00e-04 | (1457.44 ms | 5270 tok/s)
+Step 9999 / 10000 | train loss 1.505497 | norm 0.9377 | lr 1.00e-04 | (1458.20 ms | 5267 tok/s)
+Step 10000 / 10000 | train loss 1.539117 | norm 0.9696 | lr 1.00e-04 | (1458.08 ms | 5267 tok/s)
+val loss 1.5628919661045075
+----------------
+<|endoftext|>Ky knew who left Ben for a friend named Jane with her own food just at once a birthday party before they made something fun too expensive. They all looked
+----------------
+final 19 iters avg: 1459.543ms
+peak memory consumption: 0 MiB
+
+Process finished with exit code 0
+
+
+
+    parser.add_argument("--input_bin", type=str, default="dev/data/edu_fineweb_100B/edu_fineweb_train*.bin", help="input .bin to train on")
+
+
+Step 9994 / 10000 | train loss 4.776711 | norm 1.4947 | lr 1.00e-04 | (1492.44 ms | 5146 tok/s)
+Step 9995 / 10000 | train loss 5.024785 | norm 2.2307 | lr 1.00e-04 | (1475.30 ms | 5206 tok/s)
+Step 9996 / 10000 | train loss 4.661121 | norm 1.4186 | lr 1.00e-04 | (1470.92 ms | 5221 tok/s)
+Step 9997 / 10000 | train loss 4.721870 | norm 1.3331 | lr 1.00e-04 | (1480.03 ms | 5189 tok/s)
+Step 9998 / 10000 | train loss 4.800679 | norm 1.5684 | lr 1.00e-04 | (1472.81 ms | 5215 tok/s)
+Step 9999 / 10000 | train loss 4.494518 | norm 1.8815 | lr 1.00e-04 | (1472.66 ms | 5215 tok/s)
+Step 10000 / 10000 | train loss 4.641382 | norm 1.4348 | lr 1.00e-04 | (1479.62 ms | 5191 tok/s)
+val loss 5.125506520271301
+----------------
+<|endoftext|>’ll have the perfect answer – why has you already known it on Google or Mars a single spacecraft’s orbit was launched on Mars every time,
+----------------
+final 19 iters avg: 1478.951ms
+peak memory consumption: 0 MiB
+
+Process finished with exit code 0
+
